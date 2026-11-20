@@ -2,7 +2,13 @@
 
 Stop one AI run across Python and Node workers while another run keeps making model calls on the same gateway credential.
 
-[Open the full frontend](https://bifrost-tripwire.vercel.app/) · [Watch real enforcement](https://github.com/aaravjj2/bifrost-tripwire/blob/main/media/tripwire-demo.mp4) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
+**[Live demo — open the full frontend](https://bifrost-tripwire.vercel.app/)**
+
+Explore the animated intro, start a run, stop Job A, and inspect or download
+denial receipts. The hosted frontend uses clearly labeled Simulation mode.
+Follow the local setup below to run actual Bifrost enforcement and model calls.
+
+[Recorded real enforcement](https://github.com/aaravjj2/bifrost-tripwire/blob/main/media/tripwire-demo.mp4) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
 
 ![A denied on both workers while B completes](media/console.jpg)
 
@@ -38,7 +44,7 @@ The verifier drains prior admissions before committing stop. It requires two ind
 
 [Host integration and build details](host/README.md) · [Comparison and integration cost](COMPARISON.md) · [Verification record](VERIFICATION.md)
 
-## Windows demonstration
+## Hosted frontend
 
 The full interactive frontend runs on [Vercel](https://bifrost-tripwire.vercel.app/),
 including the Three.js intro, worker matrix, scenario controls, evidence dialogs
@@ -51,6 +57,8 @@ The native control service runs through the local setup above.
 The original [submitted link](https://aaravjj2.github.io/bifrost-tripwire/)
 redirects to the Vercel frontend. The event locks finalized submission fields,
 so this redirect updates the destination judges reach from the existing entry.
+
+## Windows demonstration
 
 Use Node 24, Python 3 and Go 1.27.4. Install dependencies, build the UI, run `./plugin/build.ps1`, then `./server/setup-model.ps1`. Start with `npm start`. The Windows demo embeds Bifrost core and invokes the same hook. Its receipt identifies `bifrost-embedded`; Linux shared-object trials identify `bifrost-http-dynamic`.
 
