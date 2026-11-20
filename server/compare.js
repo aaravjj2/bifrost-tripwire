@@ -34,7 +34,7 @@ try {
   for (const configuration of ['stock-shared-key', 'stock-per-run-keys']) {
     for (let trial = 1; trial <= 3; trial++) {
       const provisionStart = performance.now();
-      const create = async (label) => (await admin('', { name: configuration + '-' + label + '-' + trial, is_active: true, rate_limit: { request_max_limit: configuration === 'stock-shared-key' ? 60 : label === 'a' ? 40 : 20, request_reset_duration: '1h' }, provider_configs: [{ provider: 'openai', allowed_models: ['*'], key_ids: ['*'], weight: 1 }] })).virtual_key;
+      const create = async (label) => (await admin('', { name: configuration + '-' + label + '-' + trial, is_active: true, rate_limit: { request_max_limit: configuration === 'stock-shared-key' ? 60 : label === 'a' ? 40 : 20, request_reset_duration: '1h' }, provider_configs: [{ provider: 'openai', allowed_models: ['local/document-step'], key_ids: ['*'], weight: 1 }] })).virtual_key;
       const a = await create('a');
       const b = configuration === 'stock-shared-key' ? a : await create('b');
       assert.ok(typeof a.value === 'string' && a.value.startsWith('sk-bf-'), 'Key creation did not return a usable key');

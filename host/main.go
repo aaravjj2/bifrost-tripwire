@@ -71,16 +71,16 @@ func main() {
 	}
 	os.Setenv("BIFROST_SETUP_TOKEN", key)
 	cfg := map[string]any{
-		"version": 2, "disable_onboarding": true,
+		"$schema": "https://www.getbifrost.ai/schema", "version": 2, "disable_onboarding": true,
 		"client": map[string]any{"enforce_governance_header": true, "disable_content_logging": true},
 		"providers": map[string]any{"openai": map[string]any{
-			"keys":                        []any{map[string]any{"id": "recorder", "name": "local-recorder", "value": input.RecorderKey, "models": []string{"*"}, "weight": 1}},
+			"keys":                        []any{map[string]any{"id": "recorder", "name": "local-recorder", "value": input.RecorderKey, "models": []string{"local/document-step"}, "weight": 1}},
 			"network_config":              map[string]any{"base_url": input.RecorderURL, "max_retries": 0, "default_request_timeout_in_seconds": 5, "allow_private_network": true},
 			"concurrency_and_buffer_size": map[string]any{"concurrency": 4, "buffer_size": 16},
 		}},
 		"governance": map[string]any{"virtual_keys": []any{map[string]any{
 			"id": "shared", "name": "Tripwire shared", "value": input.SharedKey, "is_active": true,
-			"provider_configs": []any{map[string]any{"provider": "openai", "allowed_models": []string{"*"}, "key_ids": []string{"*"}, "weight": 1}},
+			"provider_configs": []any{map[string]any{"provider": "openai", "allowed_models": []string{"local/document-step"}, "allow_all_keys": true, "key_ids": []string{"*"}, "weight": 1}},
 		}}},
 	}
 	if !input.Stock && input.PluginPath != "" {
