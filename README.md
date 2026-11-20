@@ -2,7 +2,7 @@
 
 Stop one AI run across Python and Node workers while another run keeps making model calls on the same gateway credential.
 
-[Watch the recorded demo](https://aaravjj2.github.io/bifrost-tripwire/) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
+[Watch the recorded demo](https://bifrost-tripwire.vercel.app/) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
 
 ![A denied on both workers while B completes](media/console.jpg)
 
@@ -39,6 +39,14 @@ The verifier drains prior admissions before committing stop. It requires two ind
 [Host integration and build details](host/README.md) · [Comparison and integration cost](COMPARISON.md) · [Verification record](VERIFICATION.md)
 
 ## Windows demonstration
+
+The public recording and evidence page runs on [Vercel](https://bifrost-tripwire.vercel.app/).
+The Vercel project connects this repository's `main` branch with `docs` as its
+root directory, the Other framework preset, no install/build command, and `.`
+as its output directory. It serves static content without credentials or model
+inference. The native control service runs through the local setup above.
+The original [GitHub Pages link](https://aaravjj2.github.io/bifrost-tripwire/)
+remains available for the already submitted entry.
 
 Use Node 24, Python 3 and Go 1.27.4. Install dependencies, build the UI, run `./plugin/build.ps1`, then `./server/setup-model.ps1`. Start with `npm start`. The Windows demo embeds Bifrost core and invokes the same hook. Its receipt identifies `bifrost-embedded`; Linux shared-object trials identify `bifrost-http-dynamic`.
 
