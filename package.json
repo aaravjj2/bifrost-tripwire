@@ -8,7 +8,7 @@
     "dev": "node server/start.js",
     "start": "node server/start.js --production",
     "build": "vite build",
-    "test": "node --test server/policy.test.js server/remote.test.js",
+    "test": "node --test server/policy.test.js server/remote.test.js server/origin.test.js",
     "verify": "node server/verify.js",
     "resources": "node --env-file=.local/tavily.env server/resources.js",
     "compare": "node server/compare.js"

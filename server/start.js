@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { join, dirname, resolve, sep, extname } from 'node:path';
 import { createServer as createViteServer } from 'vite';
 import { Policy, secret, equalSecret } from './policy.js';
+import { permitsRequest } from './origin.js';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const port = Number(process.env.TRIPWIRE_PORT || 4177);
@@ -40,8 +41,9 @@ const standardHost = !process.env.TRIPWIRE_BIFROST_BIN && existsSync(standardBin
 const binary = process.env.TRIPWIRE_BIFROST_BIN || (standardHost ? standardBinary : join(root, '.local', process.platform === 'win32' ? 'bifrost-gateway.exe' : 'bifrost-gateway'));
 let embedded;
 let embeddedUrl;
+let gatewayLog;
 if (existsSync(binary)) {
-  const gatewayLog = createWriteStream(join(root, '.local', 'gateway-startup.log'), { flags: 'w' });
+  gatewayLog = createWriteStream(join(root, '.local', 'gateway-startup.log'), { flags: 'w' });
   embedded = spawn(binary, [], { env: { ...process.env, TRIPWIRE_PLUGIN_KEY: pluginKey }, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true });
   embedded.stderr.pipe(gatewayLog);
   embedded.stdin.end(JSON.stringify({ controlUrl: origin, recorderUrl, recorderKey, sharedKey, pluginPath: process.env.TRIPWIRE_PLUGIN_PATH, dataDir: join(root, '.local', 'standard-host', String(Date.now())) }));
@@ -80,10 +82,6 @@ async function body(req) {
 
 function operator(req) {
   return req.headers.cookie?.split(';').some((c) => c.trim() === `tripwire_session=${sessionKey}`);
-}
-
-function safeOrigin(req) {
-  return !req.headers.origin || req.headers.origin === origin;
 }
 
 async function recorderFetch(path, options = {}) {
@@ -138,7 +136,7 @@ function startWorkers(demo, associations, documents) {
 
 async function route(req, res) {
   const url = new URL(req.url, origin);
-  if (!safeOrigin(req) || ['cross-site'].includes(req.headers['sec-fetch-site'])) return json(res, 403, { error: 'Origin rejected' });
+  if (!permitsRequest(req, origin, url.pathname)) return json(res, 403, { error: 'Origin rejected' });
   if (url.pathname === '/api/session' && req.method === 'GET') {
     res.setHeader('Set-Cookie', `tripwire_session=${sessionKey}; HttpOnly; SameSite=Strict; Path=/`);
     return json(res, 200, { mode: 'local-enforcement', engine: policy.engine, provider: policy.provider, activeDemo });
@@ -217,6 +215,10 @@ async function route(req, res) {
         body: JSON.stringify(standardHost ? { ...input, provider: 'openai' } : input), signal: AbortSignal.timeout(8000),
       });
       const output = await upstream.json();
+      if (!upstream.ok) {
+        const detail = JSON.stringify(output.error ?? output).replaceAll(sharedKey, '[credential]').replaceAll(recorderKey, '[credential]').replaceAll(pluginKey, '[credential]');
+        gatewayLog?.write('Provider response HTTP ' + upstream.status + ': ' + detail + '\n');
+      }
       const row = policy.db.prepare('SELECT event FROM decisions WHERE id=?').get(req.headers['x-request-id']);
       if (upstream.ok && row) {
         const decision = JSON.parse(row.event);
