@@ -1,0 +1,1020 @@
+{
+  "checkedAt": "2026-11-20T16:10:07.097Z",
+  "constraint": "Participant reports that workers use a fixed gateway credential and per-run gateway-key distribution requires deployment changes.",
+  "trials": [
+    {
+      "configuration": "stock-shared-key",
+      "trial": 1,
+      "engine": "bifrost-http-stock",
+      "provider": "smollm2-local",
+      "gatewayCredentialsIssued": 1,
+      "provisioningMs": 42,
+      "stopOperatorActions": 1,
+      "boundary": "2026-11-20T16:08:58.580Z",
+      "observationEnd": "2026-11-20T16:09:01.289Z",
+      "postStopADenials": 2,
+      "deniedArrivals": 0,
+      "postStopBArrivals": 0,
+      "jobBCompleted": false,
+      "events": [
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "429c5039-3667-4c4e-ab2c-42191522d987",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:08:58.377347+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "aee6157c-e95e-4a97-8e58-bf33f25d6b3d",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:08:58.391Z"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "6b3d7880-82dd-44c8-a8d6-a4f364437f52",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:08:58.572Z"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "f057abd6-6d1b-4e75-bc1b-61026b2e2514",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:08:58.573476+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "f7ff9751-5e3f-4bec-8acb-72b640bc4a96",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:08:59.979194+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "894cd142-5389-4a60-a240-33792287fe42",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:08:59.997Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "59ec2fc1-59c7-438f-8589-966375070eb4",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:00.175Z"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "669ba159-0755-44b9-a62c-67ba4edd550e",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:00.175466+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "done": true,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "configuration": "stock-shared-key",
+      "trial": 2,
+      "engine": "bifrost-http-stock",
+      "provider": "smollm2-local",
+      "gatewayCredentialsIssued": 1,
+      "provisioningMs": 4,
+      "stopOperatorActions": 1,
+      "boundary": "2026-11-20T16:09:01.862Z",
+      "observationEnd": "2026-11-20T16:09:04.568Z",
+      "postStopADenials": 2,
+      "deniedArrivals": 0,
+      "postStopBArrivals": 0,
+      "jobBCompleted": false,
+      "events": [
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "86c96909-a622-4c59-b5af-d5965961d57b",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:01.640Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "8f36613e-ac9b-4e6a-bb88-34d6210e3245",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:01.690Z"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "d69f84cc-182a-42c4-b28b-8a5576112003",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:01.837133+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "b6773508-05d8-40ec-9549-6b1456ba3ea9",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:01.853641+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "3e42401a-4a60-44c9-a5fd-c39e4143ae67",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:03.245Z"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "e7714496-0655-4cca-99d1-5657ee8ed0be",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:03.292Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "014a2275-4885-42fb-bb7a-3d8c39ff42b1",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:03.438733+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "056e8b46-e54d-40cf-b9bf-5ead08e2d2c8",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:03.455118+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "done": true,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "configuration": "stock-shared-key",
+      "trial": 3,
+      "engine": "bifrost-http-stock",
+      "provider": "smollm2-local",
+      "gatewayCredentialsIssued": 1,
+      "provisioningMs": 4,
+      "stopOperatorActions": 1,
+      "boundary": "2026-11-20T16:09:05.102Z",
+      "observationEnd": "2026-11-20T16:09:07.808Z",
+      "postStopADenials": 2,
+      "deniedArrivals": 0,
+      "postStopBArrivals": 0,
+      "jobBCompleted": false,
+      "events": [
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "cd600b37-7be8-49d7-b46a-59b70d519760",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:04.917Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "7c6755b0-6295-474e-b034-42005e44d222",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:04.923Z"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "96d40261-7be2-4246-8d56-edc6d22ca6bd",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:05.095191+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "97c84e07-2dbe-486a-977d-98b29cbbb8e2",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:05.095949+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "4e5c6411-2572-4bd6-b08e-c9371441c0cc",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:06.526Z"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "49650b82-cdfb-4be6-89a4-577b0eff0142",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:06.527Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "a7483f6b-2a16-4381-9b7a-75dc8708ce28",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:06.697241+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "d641e00f-dec8-4b2d-991c-87c9978443e1",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:06.697292+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "done": true,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "configuration": "stock-per-run-keys",
+      "trial": 1,
+      "engine": "bifrost-http-stock",
+      "provider": "smollm2-local",
+      "gatewayCredentialsIssued": 2,
+      "provisioningMs": 7,
+      "stopOperatorActions": 1,
+      "boundary": "2026-11-20T16:09:08.393Z",
+      "observationEnd": "2026-11-20T16:09:27.516Z",
+      "postStopADenials": 2,
+      "deniedArrivals": 0,
+      "postStopBArrivals": 18,
+      "jobBCompleted": true,
+      "events": [
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "1cba1d4f-4cf8-430f-a44b-fdf7b512f264",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:08.154Z"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "7b9f0516-e644-4228-a91f-05c3475fb4c5",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:08.217Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "e6060e37-f16f-4375-b010-d0b083e826b9",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:08.370253+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "223556b4-b5f2-4e25-985a-15bc5065fc92",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:08.387161+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "d77ac0ca-e0be-4d6d-bd30-e680497389ec",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:09.759Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "481e6b8e-9aad-4ad6-8413-901382d3b3ca",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:09.979Z"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "ec308ccb-e699-4527-a36d-ed27688ae4e9",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:09.988722+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "2c452f35-07fd-4ffc-a9f4-7a176a78647c",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:10.098629+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "87376b13-8694-4d44-836d-7a6965b4b448",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:11.824Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "759fc254-8bd5-44b9-8398-1743144b136b",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:11.898091+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "06cc704b-718d-4db6-9089-ea60f7b29b22",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:13.667Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "47fdf5f6-c44c-44b4-b489-7efe3fcbf96f",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:13.711709+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "5e329e0d-6581-493d-a3b1-69a98dbc220b",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:15.529Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "16ab9418-81d2-4d0c-b101-e3701c48239a",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:15.546252+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "72287330-6881-427f-814e-ef114cc31af5",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:17.390Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "ca997559-9312-492d-9b0e-03f942f7bd23",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:17.411455+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "a0fa8660-da67-4eff-b19a-9ae783b498f5",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:19.241Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "b8d7e4ca-e84b-45ad-a47f-8f32466f572d",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:19.257296+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "6ddfc4d5-9b22-4b6d-a75e-4cb5adfc8dd2",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:21.080Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "21e83a67-d9ef-4dc5-be2c-f15e9ad43089",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:21.096435+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "7bc0cbae-38cf-4bcf-8405-0ca9ad1dc3b7",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:22.943Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "e6dfaa6e-c965-4d72-8d91-abc1e4d03205",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:22.958539+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "c1a28eb0-27dd-4a35-b1d8-027ae7824a99",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:24.788Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "f807963f-6a9c-4858-8fd8-7bbc359190f0",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:24.804165+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "done": true,
+          "completed": true
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "done": true,
+          "completed": true
+        }
+      ]
+    },
+    {
+      "configuration": "stock-per-run-keys",
+      "trial": 2,
+      "engine": "bifrost-http-stock",
+      "provider": "smollm2-local",
+      "gatewayCredentialsIssued": 2,
+      "provisioningMs": 47,
+      "stopOperatorActions": 1,
+      "boundary": "2026-11-20T16:09:28.186Z",
+      "observationEnd": "2026-11-20T16:09:47.402Z",
+      "postStopADenials": 2,
+      "deniedArrivals": 0,
+      "postStopBArrivals": 18,
+      "jobBCompleted": true,
+      "events": [
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "0ebc67e5-28e9-4cf6-91a1-6706cd05fb08",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:27.941Z"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "66c71a7c-5d1b-4512-b56a-437db8adb3ab",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:28.028Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "6af49226-cd59-45c7-a55f-164032f44653",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:28.164189+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "2511f44d-4902-48c6-927d-7edbdb7b03f1",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:28.180170+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "428a3fa0-1c55-4ff6-84dd-c5ff6edadb2b",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:29.549Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "a8653a81-4e64-402e-9e93-b1d866422173",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:29.782076+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "50d81bb7-782e-4d32-b372-e620450a0ed4",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:29.850Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "b87e96aa-7efb-4730-bf68-beed331bdee1",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:29.953818+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "5aa48968-4a36-4810-a271-a9a65163c4ca",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:31.705Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "12e504fe-1d09-4a6e-8d5a-36567d528311",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:31.765225+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "db653459-d461-43c1-9396-264e7bcfab27",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:33.553Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "79f7cbc1-9a8f-4068-a7f6-03dd2886bf22",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:33.584307+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "095999fd-5342-4a8f-b69c-e7336d422f2d",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:35.413Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "07eeac3d-38cc-453d-b56c-ffcb533f381d",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:35.428934+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "0cd49461-6d2c-4c4b-8350-3f574d4fac53",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:37.274Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "9c3d06e9-aaf2-43c6-b3be-2e1adec44890",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:37.290865+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "511168a5-3619-4b2a-8dd6-79369b35c1e0",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:39.123Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "ff930e94-e81d-46b7-8bd0-7e37d76f51f0",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:39.138730+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "fd84cfba-5c22-4eec-a9bb-6063a03f0795",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:40.961Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "4d788927-0af0-4d02-b032-1dfa1e1f3585",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:40.976776+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "0ab39293-418e-4f7e-9a03-493b7e84a98c",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:42.824Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "1ea90ea3-9fe9-4048-a296-a1f986a8dfc6",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:42.840663+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "8fb21356-2bdb-4c63-9f69-e7f154632545",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:44.674Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "dc917dc4-e6a0-4f31-a8de-998167fd9227",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:44.690035+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "done": true,
+          "completed": true
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "done": true,
+          "completed": true
+        }
+      ]
+    },
+    {
+      "configuration": "stock-per-run-keys",
+      "trial": 3,
+      "engine": "bifrost-http-stock",
+      "provider": "smollm2-local",
+      "gatewayCredentialsIssued": 2,
+      "provisioningMs": 8,
+      "stopOperatorActions": 1,
+      "boundary": "2026-11-20T16:09:48.024Z",
+      "observationEnd": "2026-11-20T16:10:07.095Z",
+      "postStopADenials": 2,
+      "deniedArrivals": 0,
+      "postStopBArrivals": 18,
+      "jobBCompleted": true,
+      "events": [
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "6822b729-958b-470c-a6fc-58a4ce69741d",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:47.797Z"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "bf2a3ac3-1e26-4b65-b2a8-d7bda15af148",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:47.858Z"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "fad03ad7-756d-47b8-8670-e9e7179a96a8",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:48.001325+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "90444e0b-c7d2-49f2-b2b9-fa30f77317cc",
+          "status": 200,
+          "phase": "before",
+          "time": "2026-11-20T16:09:48.018063+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "requestId": "029eb549-b590-4955-81b9-f8fb743344b8",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:49.404Z"
+        },
+        {
+          "worker": "node",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "requestId": "236a9eb3-5ca7-4380-973a-f6b85f5d768b",
+          "status": 403,
+          "phase": "after",
+          "time": "2026-11-20T16:09:49.603849+00:00"
+        },
+        {
+          "worker": "python",
+          "job": "a",
+          "done": true,
+          "completed": false
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "09282100-806d-45f4-83c9-cfc4baae5686",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:49.621Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "ebcc09b5-91c2-428b-bdaf-94feab77cfc6",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:49.749016+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "aaad0818-3370-4d69-952f-7cbde2df5e13",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:51.413Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "2a4ad104-c030-4135-a940-a5fb146fbb28",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:51.502815+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "1aa91f5e-7771-4309-87ab-27554a793e2c",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:53.247Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "e0817338-489e-4d58-afb6-f1db9b29f2de",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:53.306432+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "38d010fe-5689-4520-a5b8-632f74fa2600",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:55.104Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "3ee28b5a-7651-4783-84ae-384528746c6b",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:55.120394+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "80a47532-0060-432a-8091-8ea3319e6752",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:56.964Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "335abccb-141d-4577-a9ee-3823e496807d",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:56.980994+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "0a8b8a79-6e34-485b-888c-346be3a0f61b",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:58.817Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "3a5ffd97-d059-4cb7-84da-e1c404269e48",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:09:58.832890+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "a188a75a-65dc-4109-a9f6-ba5fc3a08565",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:10:00.660Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "4a1c1b6f-105d-4304-9c3c-615054ff610f",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:10:00.676969+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "8746b874-c553-445d-878f-ca58e80795fd",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:10:02.523Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "37ba80a8-4e61-4830-be5c-b60dc94ea389",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:10:02.539884+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "requestId": "dc5d55d2-123a-4aa8-abcb-a29cbd6b7233",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:10:04.367Z"
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "requestId": "8481a470-346b-4046-8087-5c441062e5ae",
+          "status": 200,
+          "phase": "after",
+          "time": "2026-11-20T16:10:04.383034+00:00"
+        },
+        {
+          "worker": "node",
+          "job": "b",
+          "done": true,
+          "completed": true
+        },
+        {
+          "worker": "python",
+          "job": "b",
+          "done": true,
+          "completed": true
+        }
+      ]
+    }
+  ]
+}

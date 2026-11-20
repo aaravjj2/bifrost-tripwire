@@ -1,25 +1,25 @@
-# Release work
+# Submission release
 
-The participant confirmed that workers use one fixed gateway credential and
-that distributing per-run gateway keys requires deployment changes. This is the
-target constraint. Tripwire still requires authenticated run associations in
-both worker runtimes. The comparison must report that integration cost.
+The product and submission package are complete. Native verification passed at
+[run 44769932675](https://github.com/aaravjj2/bifrost-tripwire/actions/runs/44769932675).
 
-Current release work covers standard-host dynamic-plugin trials, three stock
-shared-key trials, three stock per-run-key trials, the refreshed browser flow,
-and the final submission package. The working embedded-Bifrost/local-model
-evidence is preserved. Native Linux evidence will be published only after its
-workflow passes.
+- Public source includes installation, implementation, limitations, dependency
+  pins, original synthetic documents and reproducible verification scripts.
+- Nine real-model trials cover native Tripwire, stock shared-key revocation and
+  stock per-run-key revocation. [Comparison](COMPARISON.md) records both outcomes
+  and integration costs without claiming stock keys lack selective stop.
+- [Recorded demonstration](media/tripwire-demo.mp4) runs for 90 seconds.
+- [Pitch deck](media/tripwire-pitch.pptx) covers the problem, scope, architecture,
+  actual native results and stock comparison.
+- Private contact details, research keys, binaries, model weights and local
+  databases stay outside the public repository.
 
-The final form was inspected on November 19. It requires leader name, team name,
-leader phone and email, member count and names, track, chosen problem, GitHub
-repository link, and GitHub usernames. Slides and video links are optional.
-The Bifrost track's matching problem is Open-Source Bifrost Gateway. Tavily is
-used for development research and does not establish a separate Tavily-track
-submission. The form also requires the participant to attest to starring the
-Bifrost repository. This attestation has not been made.
+Submission destination: Global AI Hackathon on HackCulture, Bifrost track,
+Open-Source Bifrost Gateway. The organizer's [final form](https://forms.gle/8fafao1ymEpihgKd9)
+is required in addition to the platform prototype entry. Submission confirmation
+will be recorded after the forms accept the release.
 
-[Final form](https://forms.gle/8fafao1ymEpihgKd9)
-
-Public repository publication and final form submission remain separate release
-actions after the code, evidence and submission copy are ready for review.
+The release is a reproducible single-instance demonstration. Production identity,
+multi-replica coordination, streaming and hosted-provider routes remain future
+work. The published page hosts the recording and evidence, while the working
+control service runs locally using the documented setup.

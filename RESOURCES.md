@@ -45,7 +45,7 @@ credits, checks that the monthly allowance has room, and reuses a daily cache.
 Use `npm run resources -- --refresh` for a deliberate refresh.
 
 The checked-in [design notes](DESIGN.md) and
-[saved reference list](../tripwire-planning/UI-PLAN.md#saved-design-resources)
+[saved reference list](DESIGN.md#references-studied)
 retain the requested galleries. Geist and Lucide are self-hosted with their
 licenses. Three.js geometry and motion are authored locally. Gallery examples
 are inspiration references, with no third-party site assets copied into the app.

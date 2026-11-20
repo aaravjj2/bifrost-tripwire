@@ -1,0 +1,32 @@
+[
+  {
+    "trial": 1,
+    "engine": "bifrost-http-dynamic",
+    "provider": "smollm2-local",
+    "runId": "run-49250f2f-11fd-4d90-8971-35e05aeab10c",
+    "postStopDenials": 2,
+    "measuredDeniedArrivals": 0,
+    "jobBPostStopArrivals": 18,
+    "jobBCompleted": true
+  },
+  {
+    "trial": 2,
+    "engine": "bifrost-http-dynamic",
+    "provider": "smollm2-local",
+    "runId": "run-e8be2702-5d5d-41d2-a62a-083bd712438f",
+    "postStopDenials": 2,
+    "measuredDeniedArrivals": 0,
+    "jobBPostStopArrivals": 18,
+    "jobBCompleted": true
+  },
+  {
+    "trial": 3,
+    "engine": "bifrost-http-dynamic",
+    "provider": "smollm2-local",
+    "runId": "run-49868d0b-4791-4de9-8051-f4e56108545d",
+    "postStopDenials": 2,
+    "measuredDeniedArrivals": 0,
+    "jobBPostStopArrivals": 18,
+    "jobBCompleted": true
+  }
+]

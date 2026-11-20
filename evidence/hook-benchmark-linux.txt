@@ -1,0 +1,7 @@
+goos: linux
+goarch: amd64
+pkg: tripwire/host/adapter
+cpu: AMD EPYC 9V74 80-Core Processor                
+BenchmarkHookAdmission-2   	   16635	     72336 ns/op	    9846 B/op	     116 allocs/op
+PASS
+ok  	tripwire/host/adapter	1.951s

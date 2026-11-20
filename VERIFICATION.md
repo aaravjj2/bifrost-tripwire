@@ -1,31 +1,49 @@
-# Local verification
+# Verification record
 
-Checks completed on Windows with Chrome and Node 24.
+The complete [Linux workflow](https://github.com/aaravjj2/bifrost-tripwire/actions/runs/44769932675)
+passed on November 20, 2026 at source commit
+`3b574fb73c69c80f10093331cd74e0bcaeaa99c5`. It installs locked dependencies,
+runs eight Node tests, builds the production UI, tests the Go adapter, builds
+the standard HTTP host and native plugin from one pinned module graph, and
+runs nine real-model trials across three configurations.
 
-| Check | Result |
-| --- | --- |
-| Two worker processes | Python and Node independently submitted HTTP requests with the same shared credential through the embedded Bifrost executable. |
-| Selective stop | Both subsequent A attempts were denied. B continued and completed. |
-| Final local trial | Two post-stop denials, zero measured matching arrivals for those denials, 18 later B arrivals, and B completed. |
-| Receipt | Server-generated JSON included boundary, request IDs, correlation, reasons, worker identities, measured windows, counts, and local trial status. |
-| Recorder outage | Receipt remained incomplete and UI showed Unavailable without inferring zero. |
-| Operator controls | Anonymous API access and cross-origin stop were rejected. Repeating an authorized stop returned the same boundary. |
-| Policy tests | Four tests passed for isolation, expiry, permissions, idempotence, completion, trial receipt conditions, and the admission ceiling. |
-| Native adapter tests | Three Go tests passed against the pinned Bifrost source. The Windows executable embedding Bifrost compiled and passed end-to-end trials. Shared-object loading remains unverified. |
-| Repeated Bifrost trials | Three drained-boundary fixture trials each recorded two post-stop denials, zero measured matching arrivals, 18 post-stop B arrivals, and B completion. |
-| Real model trials | Three embedded-Bifrost trials with actual CPU SmolLM2 inference each passed with two denials, zero measured denied arrivals, 18 later B arrivals, and B completion. Summary saved in `../test-results/tripwire-local-model-trials.json`. |
-| Motion | Opening, pause/resume, replay, skip, resize, reduced motion, renderer failure, and interruption by Start demo passed. |
-| Immediate stop during handoff | Production UI accepted Stop Job A immediately after registration while the gate artwork transitioned. Both A workers were denied, measured denied arrivals were zero, and B completed with 18 later arrivals. The saved receipt has `passed-local-model`. |
-| Mobile | Touch and viewport emulation at 320 × 568, 390 × 667, and 768 × 1024 passed. Physical phones remain unverified. |
-| Build | Production Vite build passed. The dynamically loaded Three.js chunk is approximately 188 KB gzip. |
+| Configuration | Trials | A denials per trial | Matching denied arrivals | Later B arrivals per trial | B completes |
+| --- | --- | --- | --- | --- | --- |
+| Native Tripwire, shared key | 3 | 2 | 0 | 18 | Yes |
+| Stock Bifrost, shared key revoked | 3 | 2 | 0 | 0 | No |
+| Stock Bifrost, A's per-run key revoked | 3 | 2 | 0 | 18 | Yes |
 
-The desktop motion capture reported Intel Iris Xe through ANGLE / Direct3D11.
-A separate foreground 5.1-second callback sample recorded 605 intervals, with
-p50 of 8.3 ms and p95 of 8.5 ms. These measurements describe callback cadence.
-GPU execution time and physical-phone frame pacing remain unmeasured.
+[Native summary](evidence/native-summary.json), individual receipts/event logs,
+and [stock results](evidence/stock-comparison.json) include measured windows and
+request IDs. The recorder is a separate process forwarding to actual CPU
+SmolLM2 inference. These results cover the configured non-streaming model route
+with caching, fallback and retries disabled. A zero concerns matching denied
+request IDs within the measured window, not every possible provider route.
 
-The default provider is real local SmolLM2 inference when its pinned runtime and
-weights are available. Deterministic fixture mode remains selectable. Shared-object
-loading in the standard Bifrost HTTP host, hosted-provider route coverage, three
-stock-comparison trials per configuration, and submission materials remain release
-work listed in [BUILD.md](BUILD.md).
+The Windows embedded-Bifrost demo also passed three real-model trials. The
+[90-second movie](media/tripwire-demo.mp4) shows an actual browser trial with a
+mid-trial reload, the same recovered run IDs, both workers' denials and a receipt.
+Its later manual stop leaves 14 B arrivals after stop, versus 18 in drained trials.
+The [filmed receipt](evidence/windows-live-receipt.json) preserves that distinction.
+
+Additional checks completed on Windows with Chrome and Node 24:
+
+- Anonymous API access and cross-origin mutations rejected. Repeating an
+  authorized stop returns the original boundary. Public static navigation works.
+- Policy tests cover isolation, permissions, expiry, restart invalidation,
+  idempotence, duplicate request IDs and the admission ceiling. The remote test
+  checks refresh recovery. Three origin tests cover allowed and rejected requests.
+- Recorder failure leaves evidence incomplete and the screen shows Unavailable.
+- Intro opening, pause/resume, replay, skip, reduced motion, renderer fallback,
+  resize and immediate stop during the artwork transition checked in the browser.
+- Keyboard paths and viewport emulation at 320 × 568, 390 × 667 and 768 × 1024
+  checked. Physical-phone frame pacing remains unmeasured.
+
+The final Linux adapter benchmark measured 72,336 ns/op, 9,846 B/op and 116
+allocations/op on the recorded runner. This loopback-stub microbenchmark excludes
+SQLite, production network latency and model execution. It supports no production
+throughput or latency advantage claim. [Raw benchmark](evidence/hook-benchmark-linux.txt).
+
+See [failed attempts](FAILED-TRIALS.md) for the integration failures that preceded
+the passing run. Production identity, multi-replica behavior, cancellation,
+streaming and hosted-provider routes require separate validation.

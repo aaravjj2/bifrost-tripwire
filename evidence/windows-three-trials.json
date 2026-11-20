@@ -1,0 +1,32 @@
+[
+  {
+    "trial": 1,
+    "engine": "bifrost-embedded",
+    "provider": "smollm2-local",
+    "runId": "run-58a911e9-dd46-42bd-9f9d-bea85a9691dd",
+    "postStopDenials": 2,
+    "measuredDeniedArrivals": 0,
+    "jobBPostStopArrivals": 18,
+    "jobBCompleted": true
+  },
+  {
+    "trial": 2,
+    "engine": "bifrost-embedded",
+    "provider": "smollm2-local",
+    "runId": "run-0aeed514-d0e0-49fe-bcac-b4c9a5cf251e",
+    "postStopDenials": 2,
+    "measuredDeniedArrivals": 0,
+    "jobBPostStopArrivals": 18,
+    "jobBCompleted": true
+  },
+  {
+    "trial": 3,
+    "engine": "bifrost-embedded",
+    "provider": "smollm2-local",
+    "runId": "run-f552c373-d84a-4ca1-956d-f144cd29c0ec",
+    "postStopDenials": 2,
+    "measuredDeniedArrivals": 0,
+    "jobBPostStopArrivals": 18,
+    "jobBCompleted": true
+  }
+]

@@ -1,0 +1,7 @@
+goos: windows
+goarch: amd64
+pkg: tripwire/plugin
+cpu: 13th Gen Intel(R) Core(TM) i7-13700H
+BenchmarkHookAdmission-20    	   10000	    107833 ns/op	   11397 B/op	     118 allocs/op
+PASS
+ok  	tripwire/plugin	3.071s

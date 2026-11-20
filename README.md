@@ -1,79 +1,73 @@
 # Bifrost Tripwire
 
-For the complete local enforcement flow, launch the service from the workspace
-root with Node 24 and Python 3 available.
+Stop one AI run across Python and Node workers while another run keeps making model calls on the same gateway credential.
 
-```powershell
-node ./tripwire/server/start.js
+[Watch the recorded demo](https://aaravjj2.github.io/bifrost-tripwire/) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
+
+![A denied on both workers while B completes](media/console.jpg)
+
+Tripwire adds an operator screen, a committed stop boundary, and a receipt that separates gateway decisions from independently observed upstream arrivals. The opening is an original Three.js gate animation. The console supports keyboard interaction, reduced motion, refresh recovery, and persisted run history.
+
+## Reproduce the proof
+
+The native verification environment is Linux with Go 1.27.4, a C compiler, Node 24, Python 3, Git, curl and tar. No hosted model key is required. The workflow pins Bifrost revision `3efed2f7995f4f8c12005cda0d773cc6f8a3b60b` and verifies the llama.cpp and model downloads by SHA-256.
+
+```bash
+npm ci
+npm test
+npm run build
+mkdir -p .local
+git clone --filter=blob:none --no-checkout https://github.com/maximhq/bifrost.git .local/bifrost-source
+git -C .local/bifrost-source sparse-checkout set core framework plugins transports
+git -C .local/bifrost-source checkout 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+bash host/build.sh "$PWD/.local/bifrost-source"
+bash server/setup-model.sh
+TRIPWIRE_PLUGIN_PATH="$PWD/.local/tripwire.so" npm start
 ```
 
-Open [local enforcement](http://127.0.0.1:4177/). The default execution mode
-starts separate Python and Node workers and an independent recorder process.
-Stop A while B is running. Both workers should show A denied, then B completes
-after about 20 seconds. The UI identifies whether requests use SmolLM2 or a fixture.
+Open `http://127.0.0.1:4177/`. Start a demo, stop Job A, inspect each denial, and download the receipt. Job B finishes its ten document steps in each worker. Reload during the trial to recover the same run IDs and events.
 
-The service binds to loopback. The browser receives an HttpOnly operator session.
-Worker associations expire after three minutes. State is stored in
-`.local/tripwire.sqlite`, which is excluded from version control. Restarting the
-service invalidates previously active runs and their associations.
-The recorder failure and read-only scenarios apply to local enforcement.
-The timeout/reconnect scenario is available in Simulation mode.
-Review [build status](BUILD.md) for native Bifrost and provider release checks.
+With the service idle, run these commands in another terminal.
 
-The current workspace includes a built embedded Bifrost gateway. For a fresh
-Windows checkout with Go 1.27.4 and Git available, build it with
-`./tripwire/plugin/build.ps1` before starting the service. The UI identifies
-the selected engine. The source uses Bifrost core revision
-`3efed2f7995f4f8c12005cda0d773cc6f8a3b60b`.
-
-Run `node tripwire/server/verify.js 3` while the service is idle for three
-repeatable trials using the selected provider. Each trial waits for both A workers, drains prior
-calls before stop, and checks both denials, the recorder, and B's later traffic.
-
-The current workspace also includes the CPU model runtime. For a fresh Windows
-checkout, run `./tripwire/server/setup-model.ps1` to download and verify the pinned
-llama.cpp runner and 93.5 MB SmolLM2 model. The service starts the model on
-loopback port 4188 when those files are present. Each response is limited to
-eight generated tokens. Set `TRIPWIRE_PROVIDER=fixture` to select the deterministic
-fixture instead. Model files and binaries stay in the ignored `.local/` directory.
-
-The sample documents are in `server/documents.json`. A repeats the indexing
-step on the first paragraph. B advances through all ten paragraphs. Prompts and
-model outputs are excluded from receipts.
-
-Each local trial has a ceiling of 60 requests across both jobs and both workers.
-Worker errors and recorder outages are surfaced in the console. Open Run history
-to download persisted receipts after a refresh. A new local demo becomes available
-after the current jobs have stopped or completed.
-
-Run the policy checks from the workspace root.
-
-```powershell
-node --test ./tripwire/server/policy.test.js
+```bash
+node server/verify.js 3
+node server/compare.js
 ```
 
-For production mode, run `npm run build` and `npm start` inside `tripwire/`
-after installing its pinned dependencies. This serves the compiled UI and the
-same control API, with no development middleware.
+The verifier drains prior admissions before committing stop. It requires two independent A denials, a measured zero for each matching upstream request, later B arrivals and B completion. Incomplete evidence fails verification. The stock comparison uses separate Python and Node processes and the same document workload.
 
-From the workspace root, start the standalone preview with the installed Vite binary.
+[Host integration and build details](host/README.md) · [Comparison and integration cost](COMPARISON.md) · [Verification record](VERIFICATION.md)
 
-```powershell
-node ./node_modules/vite/bin/vite.js tripwire --host 127.0.0.1 --port 4175
-```
+## Windows demonstration
 
-Open [the local preview](http://127.0.0.1:4175/). Start the Standard demo, stop Job A, then select either worker's denial to inspect and download its run receipt. Job B progresses independently and finishes after about 18 seconds. Use the scenario menu before starting a new demo to exercise reconnect, recorder failure, boot failure, or read-only access.
+Use Node 24, Python 3 and Go 1.27.4. Install dependencies, build the UI, run `./plugin/build.ps1`, then `./server/setup-model.ps1`. Start with `npm start`. The Windows demo embeds Bifrost core and invokes the same hook. Its receipt identifies `bifrost-embedded`; Linux shared-object trials identify `bifrost-http-dynamic`.
 
-The standalone preview uses `simulator.js` and labels its events and receipts as
-simulated. The service on port 4177 supplies authenticated commands, an ordered
-event stream, persisted receipts, and an independent recorder. It identifies its
-actual gateway engine and provider in the UI and receipt.
+Windows application control on the source machine blocks the newly built full HTTP host. The working Windows movie therefore shows the embedded engine. The standard HTTP transport and dynamic loader are verified separately in Linux CI. No Windows security setting is changed.
 
-The [resource guide](RESOURCES.md) records participant credits, the coupon result,
-free local-model setup, design references, and the optional Tavily research command.
-Keep `TAVILY_API_KEY` in `.local/tavily.env`. From `tripwire/`, run
-`npm run resources` or `node --env-file=.local/tavily.env server/resources.js`
-to refresh the source catalog with up to three basic searches.
-The command uses a daily cache and never runs as part of a demo.
+The optional browser-only Simulation mode sends no model requests. It labels events and receipts as simulated. Use that mode for the timeout/reconnect scenario.
 
-The [design and asset notes](DESIGN.md) record the references used in the redesign, the hero art prompt, and the local asset sources. The production build includes the Geist and Lucide license notices.
+## Enforcement and authority
+
+Workers receive one fixed gateway credential plus distinct, expiring run association secrets. The service stores association hashes. The operator service commits stop in SQLite. The post-authentication HTTP hook asks that service before provider dispatch and fails closed when the association or service is unavailable. Worker association credentials are stripped before upstream dispatch. A correlation header joins each decision to the separate forwarding recorder.
+
+The operator session is an HttpOnly, SameSite cookie on a loopback service. Origin checks protect session/data APIs and mutations. A read-only trial is enforced on the server. This is a local demonstration authority boundary; it is not a production identity or multi-tenant authorization system.
+
+A trial admits at most 60 requests across both jobs and workers. The route uses one model with fallback, retries and caching disabled. The recorder caps generation at eight tokens per response. Documents are original synthetic paragraphs in `server/documents.json`. Receipts omit credentials, prompts and model outputs. Model binaries, weights, SQLite state and private configuration stay in ignored `.local/`.
+
+## Boundaries
+
+A stop blocks future admissions. Previously admitted calls may finish. Only the demonstrated non-streaming chat-completion route and one gateway instance are covered. Direct provider traffic, tool side effects, cancellation, billing recovery and multi-replica coordination are outside this release. A service restart invalidates old active associations. Missing recorder coverage leaves the receipt incomplete rather than implying zero arrivals.
+
+The hook adds one control-service HTTP round trip per decision. The checked-in microbenchmarks isolate the adapter and a loopback stub; they exclude SQLite, model execution and production network latency. No throughput advantage is claimed.
+
+## Design and resources
+
+The gate scene is original procedural Three.js geometry, with an original generated still as its fallback. Geist and Lucide are self-hosted with their license notices. [Design references and provenance](DESIGN.md) record the requested galleries and the Apple study.
+
+[Tavily resources](RESOURCES.md) are optional development research. Keep its key in `.local/tavily.env` and run `npm run resources` to refresh the cached source catalog with up to three basic-search credits. The product and proof do not require Tavily. The participant coupon was exhausted, and no bonus-credit claim is made.
+
+## Contribution
+
+[Apache 2.0](LICENSE). Run `npm test` and the native workflow before changing enforcement. Keep gateway decisions distinct from recorder observations, preserve run identity across replay, and keep credentials out of source and evidence. The native adapter uses Bifrost's public plugin interface without modifying upstream source.
+
+
