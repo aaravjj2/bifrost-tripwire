@@ -2,6 +2,15 @@ name: Native Bifrost verification
 on:
   push:
     branches: [main]
+    paths:
+      - 'server/**'
+      - 'plugin/**'
+      - 'host/**'
+      - '*.js'
+      - '*.html'
+      - '*.css'
+      - 'package*.json'
+      - '.github/workflows/verify.yml'
   workflow_dispatch:
 permissions:
   contents: read

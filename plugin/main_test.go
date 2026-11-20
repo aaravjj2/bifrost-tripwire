@@ -37,6 +37,9 @@ func TestAdmissionValidatesResponseAndRemovesAssociation(t *testing.T) {
 	if request.CaseInsensitiveHeaderLookup("x-tripwire-association") != "" {
 		t.Fatal("association credential must be stripped")
 	}
+	if request.CaseInsensitiveHeaderLookup("x-bf-eh-x-request-id") != "request-one" {
+		t.Fatal("HTTP provider parsing must retain the recorder correlation")
+	}
 	headers, ok := ctx.Value(schemas.BifrostContextKeyExtraHeaders).(map[string]string)
 	if !ok || headers["x-request-id"] != "request-one" || len(headers) != 1 {
 		t.Fatal("only the correlation header should be forwarded to the recorder")
@@ -75,4 +78,29 @@ func TestUnavailableServiceFailsClosed(t *testing.T) {
 		t.Fatalf("service failure must be rejected, got %v %v", response, err)
 	}
 	schemas.ReleaseHTTPResponse(response)
+}
+
+func BenchmarkHookAdmission(b *testing.B) {
+	b.Setenv("TRIPWIRE_PLUGIN_KEY", "benchmark-only-key")
+	control := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"type":"admitted","requestId":"benchmark-request"}`))
+	}))
+	defer control.Close()
+	if err := Init(map[string]any{"control_url": control.URL}); err != nil {
+		b.Fatal(err)
+	}
+	defer Cleanup()
+	ctx, cancel := schemas.NewBifrostContextWithTimeout(context.Background(), time.Minute)
+	defer cancel()
+	request := &schemas.HTTPRequest{Path: "/v1/chat/completions", Headers: map[string]string{"x-request-id": "benchmark-request"}}
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		request.Headers["x-tripwire-association"] = "benchmark-association"
+		response, err := HTTPTransportPreHook(ctx, request)
+		if err != nil || response != nil {
+			b.Fatal("Admission benchmark failed")
+		}
+	}
 }

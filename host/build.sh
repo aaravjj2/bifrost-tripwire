@@ -23,5 +23,6 @@ for folder in "$source_dir/core" "$source_dir/framework" "$source_dir/transports
   fi
 done
 go build -p 2 -mod=mod -o "$root/.local/bifrost-http-tripwire" .
-go test -p 2 -mod=mod ./adapter
+mkdir -p "$root/evidence"
+go test -p 2 -mod=mod -bench BenchmarkHookAdmission -benchmem ./adapter | tee "$root/evidence/hook-benchmark-linux.txt"
 go build -p 2 -mod=mod -buildmode=plugin -o "$root/.local/tripwire.so" ./adapter

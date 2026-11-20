@@ -109,6 +109,9 @@ func HTTPTransportPreHook(ctx *schemas.BifrostContext, request *schemas.HTTPRequ
 			delete(request.Headers, name)
 		}
 	}
+	// The HTTP handler rebuilds provider extras after transport hooks. Carry the
+	// correlation through Bifrost's documented forwarding header as well as ctx.
+	request.Headers["x-bf-eh-x-request-id"] = requestID
 	if ctx != nil {
 		ctx.SetValue(schemas.BifrostContextKeyExtraHeaders, map[string]string{"x-request-id": requestID})
 	}
