@@ -497,7 +497,7 @@ function startDemo({ demoId } = {}) {
 }
 
 elements.start.addEventListener('click', start);
-fetch('/api/session').then(async (response) => {
+if (import.meta.env.MODE !== 'frontend') fetch('/api/session').then(async (response) => {
   if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return;
   const session = await response.json();
   if (session.mode !== 'local-enforcement') return;

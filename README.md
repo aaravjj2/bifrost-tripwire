@@ -2,7 +2,7 @@
 
 Stop one AI run across Python and Node workers while another run keeps making model calls on the same gateway credential.
 
-[Watch the recorded demo](https://bifrost-tripwire.vercel.app/) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
+[Open the full frontend](https://bifrost-tripwire.vercel.app/) · [Watch real enforcement](https://aaravjj2.github.io/bifrost-tripwire/) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
 
 ![A denied on both workers while B completes](media/console.jpg)
 
@@ -40,11 +40,14 @@ The verifier drains prior admissions before committing stop. It requires two ind
 
 ## Windows demonstration
 
-The public recording and evidence page runs on [Vercel](https://bifrost-tripwire.vercel.app/).
-The Vercel project connects this repository's `main` branch with `docs` as its
-root directory, the Other framework preset, no install/build command, and `.`
-as its output directory. It serves static content without credentials or model
-inference. The native control service runs through the local setup above.
+The full interactive frontend runs on [Vercel](https://bifrost-tripwire.vercel.app/),
+including the Three.js intro, worker matrix, scenario controls, evidence dialogs
+and JSON downloads. This hosted build uses the explicitly labeled browser
+Simulation mode. It sends no model requests and does not probe for the local API.
+The Vercel project connects this repository's `main` branch with the repository
+root, the Vite framework preset, `npm ci`, `npm run build:frontend`, and `dist`
+as its output directory. These settings are checked in as `vercel.json`.
+The native control service runs through the local setup above.
 The original [GitHub Pages link](https://aaravjj2.github.io/bifrost-tripwire/)
 remains available for the already submitted entry.
 
