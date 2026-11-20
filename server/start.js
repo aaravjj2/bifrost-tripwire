@@ -212,7 +212,7 @@ async function route(req, res) {
       const upstream = await fetch(embeddedUrl + '/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-bifrost-vk': sharedKey, ...(standardHost ? { 'x-bf-vk': sharedKey } : {}), 'x-tripwire-association': req.headers['x-tripwire-association'] || '', 'x-request-id': req.headers['x-request-id'] || '' },
-        body: JSON.stringify(standardHost ? { ...input, provider: 'openai' } : input), signal: AbortSignal.timeout(8000),
+        body: JSON.stringify(standardHost ? { ...input, model: 'openai/' + input.model } : input), signal: AbortSignal.timeout(8000),
       });
       const output = await upstream.json();
       if (!upstream.ok) {
