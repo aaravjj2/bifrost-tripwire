@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, createWriteStream } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { equalSecret } from './policy.js';
@@ -14,22 +14,26 @@ const useModel = process.env.TRIPWIRE_PROVIDER !== 'fixture' && existsSync(model
 let model;
 const modelUrl = 'http://127.0.0.1:' + (process.env.TRIPWIRE_MODEL_PORT || '4188');
 if (useModel) {
+  const modelLog = createWriteStream(join(root, '.local', 'model-' + new URL(modelUrl).port + '.log'), { flags: 'w' });
   model = spawn(modelBinary, ['-m', modelFile, '--host', '127.0.0.1', '--port', new URL(modelUrl).port, '-c', '1024', '-np', '2', '-t', '4', '-n', '8', '--alias', 'local/document-step', '--no-webui'], {
     env: { ...process.env, LLAMA_API_KEY: key },
-    stdio: 'ignore', windowsHide: true,
+    stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true,
   });
+  for (const output of [model.stdout, model.stderr]) output.on('data', (chunk) => modelLog.write(String(chunk).replaceAll(key, '[credential]')));
   let failed = false;
   model.once('error', () => { failed = true; });
   model.once('exit', () => { failed = true; });
   let ready = false;
-  for (let attempt = 0; attempt < 60 && !failed; attempt++) {
+  let lastStatus = 'not listening';
+  for (let attempt = 0; attempt < 120 && !failed; attempt++) {
     try {
       const response = await fetch(modelUrl + '/v1/models', { headers: { Authorization: 'Bearer ' + key }, signal: AbortSignal.timeout(1000) });
+      lastStatus = response.status;
       if (response.ok) { ready = true; break; }
     } catch { /* Wait for the model to load. */ }
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
-  if (!ready) { model.kill(); throw new Error('Local model could not start'); }
+  if (!ready) { model.kill(); throw new Error('Local model could not start, last health status ' + lastStatus); }
 }
 const server = createServer(async (req, res) => {
   res.setHeader('Content-Type', 'application/json');

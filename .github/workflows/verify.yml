@@ -71,6 +71,10 @@ jobs:
           node --input-type=module -e "const s=await (await fetch('http://127.0.0.1:4177/api/session')).json();if(s.engine!=='bifrost-http-dynamic'||s.provider!=='smollm2-local')throw Error('Required native engine/provider unavailable');console.log(s.engine,s.provider)"
           node server/verify.js 3
           cp .local/trials/*.json evidence/
+          kill "$control_pid"
+          wait "$control_pid" || true
+          trap - EXIT
+          sleep 2
           node server/compare.js
       - name: Upload evidence
         if: always()
@@ -81,4 +85,5 @@ jobs:
             evidence/
             .local/control.log
             .local/gateway-startup.log
+            .local/model-*.log
           retention-days: 7
