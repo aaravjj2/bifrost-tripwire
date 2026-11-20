@@ -14,7 +14,8 @@ const documents = JSON.parse(await readFile(join(root, 'server/documents.json'),
 const trials = [];
 let recorder;
 try {
-  recorder = fork(join(root, 'server/recorder.js'), [], { env: { ...process.env, TRIPWIRE_RECORDER_KEY: key, TRIPWIRE_MODEL_PORT: '4190' }, stdio: ['ignore', 'ignore', 'inherit', 'ipc'] });
+  // 4190 is on Fetch's blocked-port list; use a normal loopback application port.
+  recorder = fork(join(root, 'server/recorder.js'), [], { env: { ...process.env, TRIPWIRE_RECORDER_KEY: key, TRIPWIRE_MODEL_PORT: '4191' }, stdio: ['ignore', 'ignore', 'inherit', 'ipc'] });
   const recorderInfo = await new Promise((resolve, reject) => { recorder.once('message', resolve); recorder.once('exit', () => reject(new Error('Comparison recorder failed'))); recorder.once('error', reject); });
   const recorderURL = 'http://127.0.0.1:' + recorderInfo.port;
   const gateway = spawn(binary, [], { env: { ...process.env, TRIPWIRE_PLUGIN_KEY: key }, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true });
