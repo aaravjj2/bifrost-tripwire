@@ -35,7 +35,7 @@ def run(association):
             with urllib.request.urlopen(request, timeout=6) as response:
                 response.read()
         except urllib.error.HTTPError as error:
-            if error.code == 403:
+            if error.code == 403 and association["job"] == "a":
                 return
             raise
         time.sleep(1.6)

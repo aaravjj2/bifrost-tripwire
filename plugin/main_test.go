@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/maximhq/bifrost/core/schemas"
 )
@@ -26,12 +28,18 @@ func TestAdmissionValidatesResponseAndRemovesAssociation(t *testing.T) {
 		Path:    "/v1/chat/completions",
 		Headers: map[string]string{"X-Tripwire-Association": "worker-secret", "x-request-id": "request-one"},
 	}
-	response, err := HTTPTransportPreHook(nil, request)
+	ctx, cancel := schemas.NewBifrostContextWithTimeout(context.Background(), time.Second)
+	defer cancel()
+	response, err := HTTPTransportPreHook(ctx, request)
 	if response != nil || err != nil {
 		t.Fatalf("valid admission failed: %v %v", response, err)
 	}
 	if request.CaseInsensitiveHeaderLookup("x-tripwire-association") != "" {
 		t.Fatal("association credential must be stripped")
+	}
+	headers, ok := ctx.Value(schemas.BifrostContextKeyExtraHeaders).(map[string]string)
+	if !ok || headers["x-request-id"] != "request-one" || len(headers) != 1 {
+		t.Fatal("only the correlation header should be forwarded to the recorder")
 	}
 	reply = `{"type":"admitted","requestId":"other-request"}`
 	request.Headers["x-tripwire-association"] = "worker-secret"

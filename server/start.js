@@ -20,6 +20,7 @@ const processes = new Set();
 const scenarios = new Map();
 const tokens = new Map();
 const finished = new Map();
+const failedDemos = new Set();
 let activeDemo;
 let shuttingDown = false;
 
@@ -48,6 +49,7 @@ if (existsSync(binary)) {
     const timeout = setTimeout(() => { embedded.kill(); reject(new Error('Bifrost startup timed out')); }, 90000);
     let output = '';
     embedded.stdout.on('data', (chunk) => {
+      gatewayLog.write(chunk);
       output += chunk;
       const ready = /TRIPWIRE_READY:(\d+)/.exec(output);
       if (ready) { clearTimeout(timeout); resolve('http://127.0.0.1:' + ready[1]); }
@@ -121,6 +123,7 @@ function startWorkers(demo, associations, documents) {
     const onFailure = () => {
       if (failed || shuttingDown) return;
       failed = true;
+      failedDemos.add(demo);
       policy.event(demo, 'component-error', { component: worker + ' worker', message: 'Worker exited before finishing. Start a new demo to retry.' });
     };
     child.on('error', onFailure);
@@ -128,6 +131,7 @@ function startWorkers(demo, associations, documents) {
     child.on('exit', (code) => {
       processes.delete(child);
       if (code !== 0) onFailure();
+      if (processes.size === 0) policy.event(demo, 'demo-finished', { failed: failedDemos.has(demo) });
     });
   }
 }
@@ -210,7 +214,7 @@ async function route(req, res) {
       const upstream = await fetch(embeddedUrl + '/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-bifrost-vk': sharedKey, ...(standardHost ? { 'x-bf-vk': sharedKey } : {}), 'x-tripwire-association': req.headers['x-tripwire-association'] || '', 'x-request-id': req.headers['x-request-id'] || '' },
-        body: JSON.stringify(standardHost ? { ...input, model: 'openai/' + input.model } : input), signal: AbortSignal.timeout(8000),
+        body: JSON.stringify(standardHost ? { ...input, provider: 'openai' } : input), signal: AbortSignal.timeout(8000),
       });
       const output = await upstream.json();
       const row = policy.db.prepare('SELECT event FROM decisions WHERE id=?').get(req.headers['x-request-id']);

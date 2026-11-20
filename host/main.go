@@ -110,6 +110,17 @@ func main() {
 	if err := server.Bootstrap(context.Background()); err != nil {
 		panic(err)
 	}
+	if !input.Stock && input.PluginPath != "" {
+		loaded := false
+		for _, plugin := range server.Config.GetLoadedHTTPTransportPlugins() {
+			if plugin.GetName() == "tripwire" {
+				loaded = true
+			}
+		}
+		if !loaded {
+			panic("Tripwire dynamic HTTP plugin is not active")
+		}
+	}
 	if !input.Stock && input.PluginPath == "" {
 		if err := Init(map[string]any{"control_url": input.ControlURL}); err != nil {
 			panic(err)

@@ -21,6 +21,7 @@ let lastSequence = 0;
 let localEnforcement = false;
 let embeddedBifrost = false;
 let localModel = false;
+let gatewayEngine = 'simulation';
 let enteringConsole = false;
 const intro = createIntro({
   canvas: elements['intro-canvas'],
@@ -54,6 +55,8 @@ function tell(message) {
 function setStart(label, busy = false) {
   elements.start.lastElementChild.textContent = label;
   elements.start.setAttribute('aria-disabled', String(busy));
+  elements.execution.disabled = busy;
+  elements.scenario.disabled = busy;
 }
 
 function setEmpty(title, detail, isError = false) {
@@ -280,9 +283,6 @@ function receive(event, { replayed = false } = {}) {
       boundary = event;
       rows.get(event.job).status = 'stopped';
       renderRun(event.job);
-      if (localEnforcement && [...rows.values()].every(({ status }) => ['completed', 'stopped'].includes(status))) {
-        setStart('Start new demo');
-      }
       for (const cell of cells.values()) renderWorker(cell);
       record(event, 'Stop committed for Job A. Future calls are blocked.');
       if (!replayed) tell('Job A stopped. Future calls are blocked.');
@@ -290,12 +290,12 @@ function receive(event, { replayed = false } = {}) {
     case 'run-completed':
       rows.get(event.job).status = 'completed';
       renderRun(event.job);
-      if (localEnforcement && [...rows.values()].every(({ status }) => ['completed', 'stopped'].includes(status))) {
-        setStart('Start new demo');
-      }
       record(event, `${rows.get(event.job).run.name} completed.`);
       if (!replayed) tell(`${rows.get(event.job).run.name} completed.`);
       if (selected) renderEvidence();
+      return;
+    case 'demo-finished':
+      if (localEnforcement) setStart(event.failed ? 'Retry demo' : 'Start new demo');
       return;
     case 'observation':
       observations.set(event.decisionSequence, event);
@@ -389,7 +389,8 @@ function makeReceipt(run) {
   return {
     schemaVersion: 1,
     mode: localEnforcement ? 'local-enforcement' : 'simulation',
-    provider: 'local-fixture',
+    provider: localEnforcement && localModel ? 'smollm2-local' : 'local-fixture',
+    engine: localEnforcement ? gatewayEngine : 'simulation',
     runId: run.runId,
     workers: workers.map(({ name }) => name),
     operator: boundary.operator,
@@ -408,6 +409,8 @@ function renderEvidence() {
   const observationStatus = { verified: localEnforcement ? 'Verified (local recorder)' : 'Verified (simulation)', unavailable: 'Unavailable', pending: 'Pending' }[observation?.outcome ?? 'pending'];
   const decision = evidenceSection('Gateway decision', [
     ['Decision', localEnforcement && !embeddedBifrost ? 'Denied by local gateway' : 'Denied by Bifrost'],
+    ['Engine', localEnforcement ? gatewayEngine : 'Simulation'],
+    ['Model', localEnforcement && localModel ? 'SmolLM2, local CPU' : localEnforcement ? 'Local fixture' : 'Simulated'],
     ['Worker', worker.name],
     ['Run ID', run.runId],
     ['Gateway request ID', event.requestId],
@@ -498,6 +501,7 @@ fetch('/api/session').then(async (response) => {
   if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return;
   const session = await response.json();
   if (session.mode !== 'local-enforcement') return;
+  gatewayEngine = session.engine;
   embeddedBifrost = ['bifrost-embedded', 'bifrost-http', 'bifrost-http-dynamic'].includes(session.engine);
   localModel = session.provider === 'smollm2-local';
   if (!document.body.dataset.session) setConnection('ready', embeddedBifrost ? 'Bifrost ready' : 'Gateway ready');

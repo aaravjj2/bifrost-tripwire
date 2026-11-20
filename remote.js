@@ -27,14 +27,14 @@ export function createRemote(scenario, receive, demoId) {
   }
 
   function connectStream() {
-      stream.onmessage = ({ data }) => {
-        const event = JSON.parse(data);
-        if (event.type === 'registered') runs = event.runs;
-        if (event.type === 'stop-committed') pending = false;
-        receive(event);
-      };
-      stream.onerror = () => receive({ type: pending ? 'stop-unknown' : 'disconnected' });
-      stream.onopen = () => receive({ type: 'reconnected' });
+    stream.onmessage = ({ data }) => {
+      const event = JSON.parse(data);
+      if (event.type === 'registered') runs = event.runs;
+      if (event.type === 'stop-committed') pending = false;
+      receive(event);
+    };
+    stream.onerror = () => receive({ type: pending ? 'stop-unknown' : 'disconnected' });
+    stream.onopen = () => receive({ type: 'reconnected' });
   }
 
   async function stop(job) {

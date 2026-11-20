@@ -136,7 +136,7 @@ export class Policy {
     const completed = continuation.some((e) => e.type === 'run-completed');
     return {
       schemaVersion: 1, mode: 'local-enforcement', engine: run.engine, provider: run.provider,
-      ...(run.engine === 'bifrost-embedded' ? { gatewayRevision: '3efed2f7995f4f8c12005cda0d773cc6f8a3b60b' } : {}),
+      ...(run.engine.startsWith('bifrost-') ? { gatewayRevision: '3efed2f7995f4f8c12005cda0d773cc6f8a3b60b' } : {}),
       runId, operator: 'Local operator', policyVersion: 'tripwire-local/v1',
       workers: ['Python worker', 'Node worker'],
       boundary,

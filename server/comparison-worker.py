@@ -35,7 +35,7 @@ def run(job):
         )
         request = urllib.request.Request(
             config["url"] + "/v1/chat/completions",
-            data=json.dumps({"model": "openai/local/document-step", "stream": False, "messages": [{"role": "user", "content": prompt}]}).encode(),
+            data=json.dumps({"provider": "openai", "model": "local/document-step", "stream": False, "messages": [{"role": "user", "content": prompt}]}).encode(),
             headers={"Content-Type": "application/json", "x-bf-vk": config["keys"][job], "x-request-id": request_id, "x-bf-eh-x-request-id": request_id},
         )
         try:

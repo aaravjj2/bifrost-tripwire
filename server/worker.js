@@ -20,7 +20,7 @@ async function run(association) {
       body: JSON.stringify({ model: 'local/document-step', stream: false, messages: [{ role: 'user', content: prompt }] }),
       signal: AbortSignal.timeout(6000),
     });
-    if (response.status === 403) return;
+    if (response.status === 403 && association.job === 'a') return;
     if (!response.ok) throw new Error(`Gateway returned ${response.status}`);
     await response.arrayBuffer();
     await wait(1600);

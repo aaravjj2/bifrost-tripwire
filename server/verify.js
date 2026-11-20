@@ -25,6 +25,7 @@ for (let trial = 1; trial <= trialCount; trial++) {
   const abort = new AbortController();
   const deadline = setTimeout(() => abort.abort(), 45000);
   let reader;
+  const journal = [];
   try {
     const eventsResponse = await fetch(origin + '/api/events?demo=' + encodeURIComponent(demo.demo), {
       headers: { Cookie: cookie }, signal: abort.signal,
@@ -50,6 +51,7 @@ for (let trial = 1; trial <= trialCount; trial++) {
         const data = packet.split('\n').find((line) => line.startsWith('data: '));
         if (!data) continue;
         const event = JSON.parse(data.slice(6));
+        journal.push(event);
         assert.notEqual(event.type, 'component-error', 'A worker or recorder failed');
         if (event.type === 'admitted') {
           outstanding.add(event.requestId);
@@ -78,6 +80,11 @@ for (let trial = 1; trial <= trialCount; trial++) {
     await writeFile(file, JSON.stringify(receipt, null, 2) + '\n');
     results.push({ trial, engine: receipt.engine, provider: receipt.provider, runId: receipt.runId, ...receipt.counts });
     console.log(JSON.stringify(results.at(-1)));
+    await writeFile(join(output, demo.demo + '-events.json'), JSON.stringify(journal, null, 2) + '\n');
+  } catch (error) {
+    await mkdir(join(dirname(output), '..', 'evidence'), { recursive: true });
+    await writeFile(join(dirname(output), '..', 'evidence', 'failed-trial-events.json'), JSON.stringify({ trial, engine: session.engine, provider: session.provider, events: journal }, null, 2) + '\n');
+    throw error;
   } finally {
     clearTimeout(deadline);
     await reader?.cancel();
