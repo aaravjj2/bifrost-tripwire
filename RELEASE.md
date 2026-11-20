@@ -24,6 +24,10 @@ not part of this repository.
 
 The release is a reproducible single-instance demonstration. Production identity,
 multi-replica coordination, streaming and hosted-provider routes remain future
-work. The published page hosts the recording and evidence, while the working
-control service runs locally using the documented setup.
+work. The Vercel page hosts the full interactive frontend in explicitly labeled
+Simulation mode, while the native control service runs locally using the
+documented setup. The finalized submission fields are locked. Their original
+GitHub Pages demo URL redirects to `https://bifrost-tripwire.vercel.app/`, so
+both submitted entries reach the full frontend. The real-enforcement recording
+remains available in `media/tripwire-demo.mp4`.
 

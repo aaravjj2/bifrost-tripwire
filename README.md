@@ -2,7 +2,7 @@
 
 Stop one AI run across Python and Node workers while another run keeps making model calls on the same gateway credential.
 
-[Open the full frontend](https://bifrost-tripwire.vercel.app/) · [Watch real enforcement](https://aaravjj2.github.io/bifrost-tripwire/) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
+[Open the full frontend](https://bifrost-tripwire.vercel.app/) · [Watch real enforcement](https://github.com/aaravjj2/bifrost-tripwire/blob/main/media/tripwire-demo.mp4) · [Verification workflow](https://github.com/aaravjj2/bifrost-tripwire/actions) · [Evidence](evidence/)
 
 ![A denied on both workers while B completes](media/console.jpg)
 
@@ -48,8 +48,9 @@ The Vercel project connects this repository's `main` branch with the repository
 root, the Vite framework preset, `npm ci`, `npm run build:frontend`, and `dist`
 as its output directory. These settings are checked in as `vercel.json`.
 The native control service runs through the local setup above.
-The original [GitHub Pages link](https://aaravjj2.github.io/bifrost-tripwire/)
-remains available for the already submitted entry.
+The original [submitted link](https://aaravjj2.github.io/bifrost-tripwire/)
+redirects to the Vercel frontend. The event locks finalized submission fields,
+so this redirect updates the destination judges reach from the existing entry.
 
 Use Node 24, Python 3 and Go 1.27.4. Install dependencies, build the UI, run `./plugin/build.ps1`, then `./server/setup-model.ps1`. Start with `npm start`. The Windows demo embeds Bifrost core and invokes the same hook. Its receipt identifies `bifrost-embedded`; Linux shared-object trials identify `bifrost-http-dynamic`.
 
