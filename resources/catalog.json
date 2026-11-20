@@ -1,0 +1,70 @@
+{
+  "checkedAt": "2026-11-20T00:45:24.486Z",
+  "provider": "Tavily",
+  "creditsUsed": 3,
+  "sections": [
+    {
+      "topic": "Gateway integration",
+      "query": "Bifrost HTTPTransportPreHook governance virtual keys disable key API",
+      "sources": [
+        {
+          "title": "bifrost/docs/features/governance/virtual-keys.mdx at dev · maximhq/bifrost · GitHub",
+          "url": "https://github.com/maximhq/bifrost/blob/dev/docs/features/governance/virtual-keys.mdx"
+        },
+        {
+          "title": "Virtual Keys - Bifrost",
+          "url": "https://docs.getbifrost.ai/features/governance/virtual-keys#authentication-and-virtual-keys"
+        },
+        {
+          "title": "Virtual Keys - Bifrost",
+          "url": "https://docs.getbifrost.ai/features/governance/virtual-keys"
+        },
+        {
+          "title": "List virtual keys - Bifrost",
+          "url": "https://docs.getbifrost.ai/api-reference/governance/list-virtual-keys"
+        }
+      ]
+    },
+    {
+      "topic": "Intro and UI motion",
+      "query": "Three.js WebGLRenderer dispose resources animation reduced motion view transitions pointer events",
+      "sources": [
+        {
+          "title": "WebGLRenderer — Three.js",
+          "url": "https://threejs.org/docs/pages/WebGLRenderer.html"
+        },
+        {
+          "title": "Cleanup — Three.js",
+          "url": "https://threejs.org/manual/en/cleanup.html"
+        },
+        {
+          "title": "CSS View Transitions Module Level 1",
+          "url": "https://drafts.csswg.org/css-view-transitions-1/"
+        }
+      ],
+      "curated": true
+    },
+    {
+      "topic": "Fonts and icons",
+      "query": "Geist font SIL Open Font License Lucide icons license",
+      "sources": [
+        {
+          "title": "GitHub - vercel/geist-font · GitHub",
+          "url": "https://github.com/vercel/geist-font"
+        },
+        {
+          "title": "geist-font/LICENSE.txt at main · vercel/geist-font · GitHub",
+          "url": "https://github.com/vercel/geist-font/blob/main/LICENSE.txt"
+        },
+        {
+          "title": "geist-font/packages/next/package.json at main · vercel/geist-font · GitHub",
+          "url": "https://github.com/vercel/geist-font/blob/main/packages/next/package.json"
+        },
+        {
+          "title": "Geist Font",
+          "url": "https://vercel.com/font"
+        }
+      ]
+    }
+  ]
+}

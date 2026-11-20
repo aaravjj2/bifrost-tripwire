@@ -1,0 +1,60 @@
+name: Native Bifrost verification
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CGO_ENABLED: '1'
+      TRIPWIRE_PLUGIN_PATH: ${{ github.workspace }}/.local/tripwire.so
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version: '1.27.4'
+          cache: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.22.3'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm test && npm run build
+      - name: Fetch pinned Bifrost source
+        run: |
+          git clone --filter=blob:none --no-checkout https://github.com/maximhq/bifrost.git .local/bifrost-source
+          git -C .local/bifrost-source sparse-checkout set core framework plugins transports
+          git -C .local/bifrost-source checkout 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+      - name: Build standard host and dynamic plugin
+        run: bash host/build.sh "$PWD/.local/bifrost-source"
+      - name: Install verified local model
+        run: bash server/setup-model.sh
+      - name: Real-model trials through native plugin
+        run: |
+          mkdir -p evidence
+          node server/start.js --production > .local/control.log 2>&1 &
+          control_pid=$!
+          trap 'kill "$control_pid" || true' EXIT
+          for attempt in $(seq 1 120); do
+            if curl --fail --silent http://127.0.0.1:4177/api/session > .local/session.json; then break; fi
+            if ! kill -0 "$control_pid" 2>/dev/null; then cat .local/control.log .local/gateway-startup.log; exit 1; fi
+            sleep 1
+          done
+          node --input-type=module -e "const s=await (await fetch('http://127.0.0.1:4177/api/session')).json();if(s.engine!=='bifrost-http-dynamic'||s.provider!=='smollm2-local')throw Error('Required native engine/provider unavailable');console.log(s.engine,s.provider)"
+          node server/verify.js 3
+          cp .local/trials/*.json evidence/
+          node server/compare.js
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-verification-evidence
+          path: |
+            evidence/
+            .local/control.log
+            .local/gateway-startup.log
+          retention-days: 7

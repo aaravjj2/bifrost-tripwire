@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d18">
+    <title>Runs | Bifrost Tripwire</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#runs">Skip to runs</a>
+    <header class="masthead">
+      <div class="shell bar">
+        <a class="brand" href="#overview">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+          <span><strong>Tripwire</strong> <span class="brand-byline">for Bifrost</span></span>
+        </a>
+        <div class="gateway">
+          <span id="connection" class="connection" data-state="ready">Simulator ready</span>
+          <span id="last-event" class="timestamp">Awaiting events</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="overview" aria-labelledby="hero-title">
+        <div class="shell hero-inner">
+          <div class="hero-copy">
+            <p class="mode">Gateway simulator</p>
+            <h1 id="hero-title"><span>Stop one run.</span> <span>Keep the rest moving.</span></h1>
+            <p class="hero-description">Block future model calls for one job across both workers. See the gateway’s decision for each request.</p>
+            <button class="button primary" id="start" type="button"><span class="play" aria-hidden="true"></span><span>Start demo</span></button>
+          </div>
+          <div class="hero-art">
+            <picture aria-hidden="true">
+              <source media="(max-width: 640px)" srcset="./assets/tripwire-gate-small.webp">
+              <img src="./assets/tripwire-gate.webp" width="1400" height="1050" alt="" fetchpriority="high" decoding="async">
+            </picture>
+            <canvas id="intro-canvas" aria-label="Illustration of a gate blocking Job A’s call while Job B’s call passes through."></canvas>
+            <div class="scene-caption" id="scene-caption">One gateway. Two independent runs.</div>
+          </div>
+          <div class="intro-controls" id="intro-controls" hidden>
+            <button id="intro-toggle" type="button">Pause intro</button>
+            <button id="intro-skip" type="button">Skip intro</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="shell workspace" id="runs" tabindex="-1" aria-labelledby="workspace-title">
+        <div class="workspace-heading">
+          <div><h2 id="workspace-title">Run monitor</h2><p>Gateway events and evidence are simulated locally.</p></div>
+          <label class="scenario">Execution
+            <select id="execution"><option value="simulation">Simulation</option></select>
+          </label>
+          <label class="scenario">Scenario
+            <select id="scenario">
+              <option value="standard">Standard</option>
+              <option value="reconnect">Stop timeout and reconnect</option>
+              <option value="recorder">Recorder unavailable</option>
+              <option value="boot">Gateway boot failure</option>
+              <option value="readonly">Read-only operator</option>
+            </select>
+          </label>
+        </div>
+        <div class="workspace-layout">
+          <p id="component-error" class="component-error" role="alert" hidden></p>
+          <section class="panel monitor" aria-labelledby="monitor-title">
+            <div class="panel-heading">
+              <h3 id="monitor-title">Worker matrix</h3>
+              <div id="key" class="key" hidden><span>Shared virtual key</span> <code>tripwire-demo</code></div>
+            </div>
+            <div id="empty" class="empty">
+              <span class="empty-mark" aria-hidden="true"><i></i><i></i></span>
+              <div>
+                <h4 id="empty-title">No runs yet</h4>
+                <p id="empty-detail">Start a demo to compare Python and Node requests on the same key.</p>
+              </div>
+            </div>
+            <p id="permission" class="permission" hidden>Read-only operator. You can inspect run activity.</p>
+            <div id="matrix" class="matrix" role="table" aria-label="Runs by worker" hidden></div>
+          </section>
+
+          <section class="panel activity" aria-labelledby="activity-title">
+            <div class="panel-heading"><h3 id="activity-title">Recent activity</h3><span id="activity-count" class="muted"></span></div>
+            <p id="activity-empty" class="activity-empty">Events appear as requests reach the gateway.</p>
+            <ol id="activity-list" class="activity-list" aria-label="Most recent events first"></ol>
+          </section>
+        </div>
+        <details class="history" id="history" hidden>
+          <summary>Run history</summary>
+          <ul id="history-list"></ul>
+        </details>
+        <p id="announcement" class="visually-hidden" role="status"></p>
+      </section>
+    </main>
+
+    <dialog id="evidence" aria-labelledby="evidence-title">
+      <div class="drawer-heading">
+        <div><p id="evidence-context" class="muted"></p><h2 id="evidence-title">Denial evidence</h2></div>
+        <button type="button" class="icon-button" id="close-evidence" aria-label="Close evidence" autofocus></button>
+      </div>
+      <div id="evidence-content" class="drawer-content"></div>
+      <div class="drawer-footer"><a id="download" class="button primary" download>Download JSON receipt</a></div>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    {
+      "name": "tripwire",
+      "enabled": true,
+      "path": "/absolute/path/to/tripwire.so",
+      "config": {
+        "control_url": "http://127.0.0.1:4177"
+      }
+    }
+  ]
+}

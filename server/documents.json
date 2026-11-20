@@ -1,0 +1,12 @@
+[
+  "The archive service indexes each new document once and records its source identifier.",
+  "The review queue groups documents by project so operators can inspect related changes together.",
+  "A successful import includes the document title, its revision number, and a completion timestamp.",
+  "Workers preserve completed records when another job on the same service is stopped.",
+  "The operator can open a request receipt to inspect the decision and its correlation identifier.",
+  "An upstream recorder reports only the arrivals that it actually observed during its measurement window.",
+  "A missing recorder leaves the evidence incomplete until its observations can be restored.",
+  "A stop boundary affects future admissions while previously admitted requests can finish.",
+  "Each new processing run receives a fresh identifier so an older stopped run cannot resume accidentally.",
+  "The summary stage completes after every assigned document paragraph has been processed."
+]
